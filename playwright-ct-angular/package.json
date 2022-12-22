@@ -1,0 +1,33 @@
+{
+  "name": "@playwright/experimental-ct-angular",
+  "version": "1.30.0-next",
+  "description": "Playwright Component Testing for Angular",
+  "repository": "github:Microsoft/playwright",
+  "homepage": "https://playwright.dev",
+  "engines": {
+    "node": ">=14"
+  },
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./register": {
+      "types": "./register.d.ts",
+      "default": "./register.mjs"
+    },
+    "./hooks": {
+      "types": "./hooks.d.ts",
+      "default": "./hooks.mjs"
+    }
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^2.2.0",
+    "@playwright/test": "1.30.0-next",
+    "vite": "^3.2.1"
+  }
+}
