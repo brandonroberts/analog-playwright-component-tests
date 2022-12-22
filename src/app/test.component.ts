@@ -1,8 +1,18 @@
-import { Component } from "@angular/core";
+import { Component, Injectable } from "@angular/core";
+
+@Injectable({ providedIn: 'root' })
+export class MyService {}
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  template: `Test Works`
+  template: `<h2>Test Works</h2>`,
+  styles: [`
+    h2 {
+      color: red;
+    }
+  `]
 })
-export class TestComponent {}
+export class TestComponent {
+  constructor(private myService: MyService) {}
+}

@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import { reflectComponentType } from '@angular/core';
-
 // @ts-check
 // This file is injected into the registry as text, no dependencies are allowed.
 
@@ -37,9 +35,9 @@ export function register(components) {
 }
 
 /**
- * @param {Type<any>} component
+ * @param {any} component
  */
-function render(component) {
+function render(component, rootElement) {
   let componentFunc = registry.get(component.type);
   if (!componentFunc) {
     // Lookup by shorthand.
@@ -63,9 +61,9 @@ function render(component) {
   return createApplication().then((appRef) => {
     const zone = appRef.injector.get(NgZone);
     zone.run(() => {
-      const componentRef = createComponent(Component, {
+      const componentRef = createComponent(componentFunc, {
         environmentInjector: appRef.injector,
-        hostElement: element,
+        hostElement: rootElement,
       });
 
       appRef.attachView(componentRef.hostView);
@@ -77,19 +75,17 @@ window.playwrightMount = async (component, rootElement, hooksConfig) => {
   for (const hook of /** @type {any} */(window).__pw_hooks_before_mount || [])
     await hook({ hooksConfig });
 
-  await render(component);
+  await render(component, rootElement);
 
   for (const hook of /** @type {any} */(window).__pw_hooks_after_mount || [])
     await hook({ hooksConfig });
 };
 
 window.playwrightUnmount = async rootElement => {
-  console.log(rootElement);
   // if (!ReactDOM.unmountComponentAtNode(rootElement))
     // throw new Error('Component was not mounted');
 };
 
 window.playwrightUpdate = async (rootElement, component) => {
-  console.log(rootElement, component);
-  // ReactDOM.render(render(/** @type {Component} */(component)), rootElement);
+  await render(component, rootElement);
 };

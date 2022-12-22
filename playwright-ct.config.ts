@@ -1,5 +1,6 @@
 import type { PlaywrightTestConfig } from './playwright-ct-angular';
 import { devices } from './playwright-ct-angular';
+import angular from '@analogjs/vite-plugin-angular';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -27,6 +28,12 @@ const config: PlaywrightTestConfig = {
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
+
+    ctViteConfig: {
+      plugins: [angular({
+        tsconfig: 'tsconfig.spec.json'
+      })]
+    }
   },
 
   /* Configure projects for major browsers */
